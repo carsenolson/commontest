@@ -16,6 +16,10 @@ func (c *Config) Commit() error {
 	if err != nil {
 		return err
 	}
+	err = os.Mkdir(c.Test_path+"/images", 0700)
+	if err != nil {
+		return err
+	}
 	err = os.Mkdir(c.Result_path, 0700)
 	if err != nil {
 		return err
