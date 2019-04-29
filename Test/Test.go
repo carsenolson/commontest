@@ -1,6 +1,7 @@
 package Test
 
 import (
+	//"io"
 	"os"
 	"encoding/json"
 	"io/ioutil"
@@ -28,8 +29,8 @@ type Test struct {
 }
 
 func (t *Test) DeleteQuestion(index int) {
-	t.Questions[index] = t.Questions[len(t.Questions)-1]
-	t.Questions[len(t.Questions)-1] = Question{}
+	copy(t.Questions[index:], t.Questions[index+0:])
+	t.Questions[len(t.Questions)-1] = *new(Question) // or the zero value of T
 	t.Questions = t.Questions[:len(t.Questions)-1]
 }
 
@@ -48,6 +49,14 @@ func (t *Test) Save(path string) error {
 		return err
 	}
 	return nil
+}
+
+func GetAllTests(path string) ([]os.FileInfo, error) {
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		return nil, err
+	}
+	return files, nil
 }
 
 func NewTest(name string, time int, questions []Question) *Test {
