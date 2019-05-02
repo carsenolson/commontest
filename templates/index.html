@@ -1,5 +1,23 @@
 {{ template "header" . }}
 
-<h1>Hello, this is a test creator page</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-sm align-self-center text-center">
+			<p>You should press button below after checking that every test you want will be accessible for other people</p>	
+			<button type="button" class="btn btn-primary">Start testing</button>	
+		</div>
+	</div>
+	<div class="row">
+		{{ range $num, $test := .Tests }} 	
+			.test.Name()	
+	
+		{{ else }}
+			<p>There is no tests yet!</p>
+		{{ end }} 
+	</div>
+	<div class="row">
+		<a href="/newtest" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Create new test</a>	
+	</div>
+</div>
 
 {{ template "footer" . }}

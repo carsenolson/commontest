@@ -1,0 +1,33 @@
+{{ template "header" . }}
+<div class="container">
+	<div class="row text-secondary input-group-custom bg-light" >
+		  <div class="col-sm">
+			<label for="exampleInputEmail1">File name</label>
+			<input type="text" class="form-control" placeholder="file name">
+		  </div>
+		  <div class="col-sm-6">
+			<label for="exampleInputPassword1">Test name</label>
+			<input type="text" class="form-control" placeholder="test name">
+		  </div>
+		  <div class="col-sm">
+			<label for="exampleInputPassword1">Time</label>
+			<input type="text" class="form-control" placeholder="time (min)">
+		  </div>
+	</div>
+	<div class="accordion" id="accordionExample" style="margin: 20px 0px;">
+	</div>
+	<br>
+	<br>
+	<br>	
+	<div class="fixed-bottom text-center bg-light">
+		<div class="btn-group" role="group" style="margin-bottom: 5px;">
+		  <button type="button" class="btn btn-secondary" id="add-question">Add question</button>
+		  <button type="button" class="btn btn-success" id="save-test">Save Test</button>
+		</div>		
+	</div>
+</div>
+
+<script src="/static/js/jquery-3.4.0.min.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>  
+<script src="/static/js/bootstrap.min.js"></script> 
+<script src="/static/js/interface.js"></script> 

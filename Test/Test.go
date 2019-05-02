@@ -28,13 +28,15 @@ func (t *Test) AddQuestion(title string, images []string, answers []string, true
 	t.Questions = append(t.Questions, *q)
 }
 
+// Unfortunately this function has no value
+// cause of the concept of test constructor.
 func (t *Test) DeleteQuestion(index int) {
 	copy(t.Questions[index:], t.Questions[index+0:])
 	t.Questions[len(t.Questions)-1] = *new(Question)
 	t.Questions = t.Questions[:len(t.Questions)-1]
 }
 
-// there is no official way to copy file in golang, so I fetched that from stackoverflow 
+// There is no official way to copy file in golang, so I fetched that from stackoverflow 
 func CopyFileContents(src, dst string) (err error) {
     in, err := os.Open(src)
     if err != nil {
