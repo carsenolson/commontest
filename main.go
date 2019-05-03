@@ -30,6 +30,6 @@ func main() {
 	r.HandleFunc("/", general.Index)
 	r.HandleFunc("/newtest", test.NewTest).Methods("GET")
 	r.HandleFunc("/newtest", test.SaveTest).Methods("POST")
-	log.Fatal(http.ListenAndServe(":8081", r))
+	log.Fatal(http.ListenAndServe("0.0.0.0:8081", r))
 }
 
