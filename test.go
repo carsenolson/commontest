@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os"
+	//"os"
 	"fmt"
 	"net"
-	"commontest/Test"
-	"commontest/Config"
-	"strconv"
+	//"commontest/Test"
+	//"commontest/Config"
+	//"strconv"
 )
 
 func GetOutboundIP() net.IP {
