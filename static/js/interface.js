@@ -1,18 +1,78 @@
 questionIndex = $(".accardion").children().length;
 
+function handleFileSelect(evt) {
+	let reader = new FileReader()	
+	reader.onload = (function(theFile) {
+		return function(e) {
+			let img = document.createElement("img")		
+			$(img).attr('src', e.target.result)
+			$(img).attr('title', theFile.name)	
+			$(img).css("height", "70px")	
+			$($(evt)[0].nextElementSibling.nextElementSibling).html("")	
+			$($(evt)[0].nextElementSibling.nextElementSibling).append(img)	
+		};
+	})(evt.files[0]);
+	reader.readAsDataURL(evt.files[0])
+}
+
+$("#save-test").on("click", walkThrough); 
+
+function walkThrough() {
+	// Create test data structure then parse everything	
+	let data = {
+		File_name: "",
+		Test: {
+			Name: "",
+			Time: 20, Questions: []
+		}
+	}
+	readers = [];	
+	let test_option_inputs = $(".input-group-custom").find("input")	
+	data["File_name"] = test_option_inputs[0].value
+	data["Test"]["Name"] = test_option_inputs[1].value
+	data["Test"]["Time"] = test_option_inputs[2].value 
+	// Walk through questions
+	for (question of $(".accordion").find(".question")) {
+		let qt = {Title: "", Answers: [], Image:[], True_answers: []}	
+		qt["Title"] = question.firstElementChild.value //Title		
+		// loop over answers	
+		let answers = $(question).find(".answer-area").find("input");	
+		for (let i = 0; i < answers.length; i++) {
+			if ($(answers[i]).attr("class") == "right-answer" && answers[i].checked == true) {
+				if (i == 0) {	
+					qt["True_answers"].push(i)		
+				} else if (i == 2) {
+					qt["True_answers"].push(i-1)
+				} else {
+					qt["True_answers"].push(i/2)
+				}
+			}
+			if ($(answers[i]).attr("class") == "form-control") {
+				qt["Answers"].push(answers[i].value)
+			}
+		}
+		// loop over images
+		for (image of $(question).find(".image-area").find("img")) {
+			qt["Image"].push([$(image).attr('title'), $(image).attr('src')])				
+		}
+		data["Test"]["Questions"].push(qt)
+	}	
+	sendPostData(data)	
+}
+
 function deleteQuestion(elem) {	
 	$($(elem))[0].parentNode.parentNode.parentNode.remove()
 }
 
 function addImage(elem) {
-	console.log($($(elem)))	
-	console.log($($(elem)[0].previousElementSibling))	
 	$($(elem)[0].parentNode.previousElementSibling.previousElementSibling).append(`
 						<div class="input-group d-inline">	
-							<input type="file" class="form-control-file-sm" style="width:80%">
+							<input type="file" class="form-control-file-sm" style="width:80%" onchange="handleFileSelect(this)">
                             	<button class="btn btn-sm btn-outline-danger delete-answer" type="button" id="button-addon2" 
 																onclick="deleteImage(this)" style="width: 17%">Del</button>
-						</div> `)
+							<output class="list" width=""></output><br>	
+						</div> 
+			`)
 }
 
 function deleteImage(elem) {
@@ -26,9 +86,18 @@ function rightAnswer(elem) {
 		$($(elem)[0].parentNode).css("background", "#e9ecef");
 }
 
-$("#save-test").on("click", function(event) {
-	console.log("Pressed", event);
-});
+function sendPostData(data) {
+	$.ajax({
+		method: "POST",	
+		url:"/newtest",
+		data: JSON.stringify(data), 
+		dataType: "json",	
+		beforeSend: function() { console.log(JSON.stringify(data)) },	
+		success: function(result) {
+			console.log(result)
+		}
+	});
+}
 
 function deleteAnswer(elem) {
 	$($(elem))[0].parentNode.parentNode.remove()
@@ -48,7 +117,7 @@ function addAnswer(elem) {
 														</div>
 													</div>
 												</div>
-												`);
+														`);
 }
 
 // Handler for add question button
@@ -69,9 +138,10 @@ $('#add-question').on("click", function(event) {
                       <input type="text" class="form-control" placeholder="Question title">
                       <div class="image-area" style="margin-top: 20px;"> 
 					  	<div class="input-group d-inline">	
-							<input type="file" class="form-control-file-sm" style="width: 80%">
+							<input type="file" class="form-control-file-sm" style="width: 80%" onchange="handleFileSelect(this)">
                             	<button class="btn btn-sm btn-outline-danger delete-answer" type="button" id="button-addon2" 
 																onclick="deleteImage(this)" style="width: 17%">Del</button>
+							<output class="list"></output><br>	
 						</div> 	
 					  </div> 
 					  <div class="answer-area" style="margin: 20px 0px">

@@ -1,7 +1,7 @@
 package Test
 
 import (
-	"io"
+	//"io"
 	"os"
 	"encoding/json"
 	"io/ioutil"
@@ -9,7 +9,8 @@ import (
 
 type Question struct {
 	Title string
-	Image, Answers []string
+	Image [][]string
+	Answers []string
 	True_answers []int
 }
 
@@ -19,45 +20,13 @@ type Test struct {
 	Questions []Question
 }
 
-func (t *Test) AddQuestion(title string, images []string, answers []string, true_answers []int) {
+func (t *Test) AddQuestion(title string, images [][]string, answers []string, true_answers []int) {
 	q := new(Question)
 	q.Title = title
 	q.Image = images
 	q.Answers = answers
 	q.True_answers = true_answers
 	t.Questions = append(t.Questions, *q)
-}
-
-// Unfortunately this function has no value
-// cause of the concept of test constructor.
-func (t *Test) DeleteQuestion(index int) {
-	copy(t.Questions[index:], t.Questions[index+0:])
-	t.Questions[len(t.Questions)-1] = *new(Question)
-	t.Questions = t.Questions[:len(t.Questions)-1]
-}
-
-// There is no official way to copy file in golang, so I fetched that from stackoverflow 
-func CopyFileContents(src, dst string) (err error) {
-    in, err := os.Open(src)
-    if err != nil {
-        return
-    }
-    defer in.Close()
-    out, err := os.Create(dst)
-    if err != nil {
-        return
-    }
-    defer func() {
-        cerr := out.Close()
-        if err == nil {
-            err = cerr
-        }
-    }()
-    if _, err = io.Copy(out, in); err != nil {
-        return
-    }
-    err = out.Sync()
-    return
 }
 
 func (t *Test) Save(path, filename string) error {
@@ -74,17 +43,6 @@ func (t *Test) Save(path, filename string) error {
 	_, err = file.Write(data)
 	if err != nil {
 		return err
-	}
-	// analyze questions images and copy them into config.test_path/images 
-	// directory for allowing import tests
-	// TODO: optmize this process, it doesn't check if file already exists
-	for _, value := range t.Questions {
-		for _, image := range value.Image {
-			err = CopyFileContents(image, path+"/images/"+image)
-			if err != nil {
-				return err
-			}
-		}
 	}
 	return nil
 }
@@ -125,22 +83,7 @@ func NewTestFromFile(path, filename string) (*Test, error) {
 }
 
 func DeleteTest(path, file_name string) error {
-	test, err := NewTestFromFile(path, file_name)
-	if err != nil {
-		return err
-	}
-	err = os.Remove(path+"/"+file_name)
+	err := os.Remove(path+"/"+file_name)
 	if err != nil { return err }
-	for _, value := range test.Questions {
-		for _, image := range value.Image {
-			err = os.Remove(path+"/images/"+image)
-			// Skip because of error "file doesn't exist" 	
-			// It should not be like that, but it optimizes the process of 
-			// deleting same files if they occurs in the same test	
-			if err != nil {
-				continue
-			}
-		}
-	}
 	return nil
 }
