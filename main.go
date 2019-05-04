@@ -23,13 +23,13 @@ func main() {
 	test := controllers.NewTestController(config)
 
 	r := mux.NewRouter()
-	// Define two dirs to serve statically for fetching the images and styles/js	
-	r.PathPrefix("/images/").Handler(http.StripPrefix("/images/", http.FileServer(http.Dir(config.Test_path+"/images/"))))
+
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 
-	r.HandleFunc("/", general.Index)
+	r.HandleFunc("/", general.Index).Methods("GET")
+	r.HandleFunc("/", general.ActionHandle).Methods("POST")
 	r.HandleFunc("/newtest", test.NewTest).Methods("GET")
 	r.HandleFunc("/newtest", test.SaveTest).Methods("POST")
-	log.Fatal(http.ListenAndServe("0.0.0.0:8081", r))
+	r.HandleFunc("/test/{file_name}", test.ExistedTest).Methods("GET")
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
-

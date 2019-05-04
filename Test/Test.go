@@ -16,7 +16,7 @@ type Question struct {
 
 type Test struct {
 	Name string
-	Time int
+	Time string
 	Questions []Question
 }
 
@@ -61,7 +61,7 @@ func GetAllTests(path string) (tests []os.FileInfo, err error) {
 	return tests, nil
 }
 
-func NewTest(name string, time int) *Test {
+func NewTest(name, time string) *Test {
 	t := new(Test)
 	t.Name = name
 	t.Time = time

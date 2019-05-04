@@ -1,15 +1,15 @@
 package controllers
 
 import (
+	"io"
 	"fmt"
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
 	"commontest/Config"
 	"commontest/Test"
+	"github.com/gorilla/mux"
 )
-
-var _ = Test.NewTest("hello", 20)
 
 type TestController struct {
 	conf *Config.Config
@@ -32,7 +32,24 @@ func (tc *TestController) SaveTest(rw http.ResponseWriter, req *http.Request) {
 		Test Test.Test
 	}{}
 	data, _ := ioutil.ReadAll(req.Body)
-	fmt.Println(string(data))
 	json.Unmarshal(data, &e)
-	e.Test.Save(tc.conf.Test_path, e.File_name+".json")
+	err := e.Test.Save(tc.conf.Test_path, e.File_name)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("saved test")
+	}
+	io.WriteString(rw, "okay")
+}
+
+func (tc *TestController) ExistedTest(rw http.ResponseWriter, req *http.Request) {
+	file_name := mux.Vars(req)["file_name"]
+	test, err := Test.NewTestFromFile(tc.conf.Test_path, file_name)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = tpl.ExecuteTemplate(rw, "existedtest.html", map[string]interface{}{"File_name": file_name, "Test": test})
+	if err != nil {
+		fmt.Println(err)
+	}
 }

@@ -1,0 +1,89 @@
+{{ template "header" . }}
+
+<div class="container">
+    <div class="row text-secondary input-group-custom bg-light">
+        <div class="col-sm">
+            <label>File name</label>
+            <input type="text" class="form-control" placeholder="file name" value="{{ .File_name }}">
+        </div>
+        <div class="col-sm-6">
+            <label>Test name</label>
+            <input type="text" class="form-control" placeholder="test name" value="{{ .Test.Name }}">
+        </div>
+        <div class="col-sm">
+            <label>Time</label>
+            <input type="number" class="form-control" placeholder="time (min)" value="{{ .Test.Time }}">
+        </div>
+    </div>
+    <div class="accordion" id="accordionExample" style="margin: 20px 0px;">
+        {{ range $num, $question := .Test.Questions }}
+            <div class="card">
+                <div class="card-header" id="Question">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $num }}" aria-expanded="true" aria-controls="collapseOne">Question  
+                       </button>
+                        <button type="button" class="btn btn-danger float-right delete-question" onclick="deleteQuestion(this)">Delete</button>
+                    </h2>
+                </div>
+                <div id="collapse{{ $num }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="question">
+                            <input type="text" class="form-control" placeholder="Question title" value="{{ $question.Title }}">
+                            <div class="image-area" style="margin-top: 20px;">
+                                {{ range $image := $question.Image }}   
+                                <div class="input-group d-inline">
+                                    <input type="file" class="form-control-file-sm" style="width: 80%" onchange="handleFileSelect(this)" value="{{ index $image 0 }}">
+                                    <button class="btn btn-sm btn-outline-danger delete-answer" type="button" id="button-addon2" onclick="deleteImage(this)" style="width: 17%;">Del</button>
+                                    <output class="list">
+                                        <img src="{{ index $image 1 | safeUrl }}" title="{{index $image 0}}" style="height: 70px;">
+                                    </output>
+                                    <br>
+                                </div>
+                                {{ end }} 
+                            </div>
+                            <div class="answer-area" style="margin: 20px 0px">
+                                {{ range $num, $answer := $question.Answers }} 
+                                <div class="answer">
+                                    <div class="input-group">
+                                        {{ if isInRightAnswers $num $question.True_answers }}  
+                                        <div class="input-group-text" style="background-color: #28a745;">
+                                            <input type="checkbox" class="right-answer" onclick="rightAnswer(this)" aria-label="Checkbox for following text input" checked>
+                                        </div>
+                                        {{ else }} 
+    								  			
+                                        <div class="input-group-text">
+                                            <input type="checkbox" class="right-answer" onclick="rightAnswer(this)" aria-label="Checkbox for following text input">
+                                        </div>
+                                        {{end}} 
+                                       <input type="text" class="form-control" placeholder="Possible answer" aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ $answer }}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-danger delete-answer" type="button" id="button-addon2" onclick="deleteAnswer(this)">Del</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ end }} 
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addImage(this)">Add image</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addAnswer(this)">Add answer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{ end }}
+    </div>
+    <br>
+    <br>
+    <br>
+	<div class="fixed-bottom text-center bg-light"> 
+		<div class="btn-group" role="group" style="margin-bottom: 5px;">
+        	<button type="button" class="btn btn-secondary" id="add-question">Add question</button>
+            <button type="button" class="btn btn-success" id="save-test">Save Test</button>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery-3.4.0.min.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/interface.js"></script>

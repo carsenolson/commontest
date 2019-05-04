@@ -7,17 +7,24 @@
 			<button type="button" class="btn btn-primary">Start testing</button>	
 		</div>
 	</div>
+	{{ range $test := .Tests }} 	
+	<div class="border-bottom rounded bg-light" style="margin: 15px auto;">	
+		<div class="col-lg">
+			<a href="/test/{{ .Name }}"><h5>{{ .Name }}</h5></a> 
+			<p>Size (bytes): {{ .Size }} Last Modified: {{ .ModTime }}<p>
+		</div>	
+		<div class="col-sm">	
+			<button type="button" class="btn btn-danger" onclick="deleteTest(this)">Delete</button>
+		</div>	
+	</div>	
+	{{ else }}
+		<h4>There is no tests yet!</h4>
+	{{ end }} 
 	<div class="row">
-		{{ range $num, $test := .Tests }} 	
-			.test.Name()	
-	
-		{{ else }}
-			<p>There is no tests yet!</p>
-		{{ end }} 
-	</div>
-	<div class="row">
-		<a href="/newtest" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Create new test</a>	
+		<a href="/newtest" class="btn btn-secondary btn active" role="button" aria-pressed="true">Create new test</a>	
 	</div>
 </div>
+
+<script src="/static/js/general.js"></script>
 
 {{ template "footer" . }}
