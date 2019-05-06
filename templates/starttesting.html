@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	<title></title>
+    	<style>
+      		.bd-placeholder-img {
+				font-size: 1.125rem;
+				text-anchor: middle;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+      		}
+
+			@media (min-width: 768px) {
+				.bd-placeholder-img-lg {
+				  	font-size: 3.5rem;
+				}
+      		}
+    	</style>
+		<!-- Custom styles for this template -->
+		<link href="/static/css/style.css" rel="stylesheet">
+		<link href="/static/css/bootstrap-grid.min.css" rel="stylesheet">
+		<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/css/bootstrap-reboot.min.css" rel="stylesheet">
+  	</head>
+  	<body>
+		<div class="container">	
+			<input type="text" class="form-control" value="{{ .Full_name }}" readonly>	
+			<input type="text" class="form-control" value="{{ .Group }}" readonly>	
+			<input type="text" class="form-control" value="{{ .File_name }}" readonly>	
+			<br>	
+			<h4>Time for test <span class="badge badge-secondary">{{ .Test.Time }}</span> min</h4>	
+			</br>	
+			{{ range $question := .Test.Questions }}  	
+				<div class="question bg-light mb-20 border-bottom">		
+					<h3 class="p-2" style="background-color: #e9e9e9;">{{ $question.Title }}</h3>	
+					<div class="imgbox">		
+					{{ range $image := $question.Image }}
+						<img src="{{ index $image 1 | safeUrl }}" alt="{{ index $image 0 }}" class="classic-image" onclick="scaleImage(this)">
+					{{ end }}
+					</div>	
+					{{ range $answer := $question.Answers }}
+						<div class="p-2 answer border-top" style="background-color: rgb(249, 250, 251);" onclick="checkAnswer(this)">{{ $answer }}</div>	
+					{{ end }}	
+				</div>	
+			{{ end }}	
+		</div>
+		<br>		
+		<button type="button" class="btn btn-success btn-block" onclick="walkThrough(this)">Finish</button>	
+		<script src="/static/js/jquery-3.4.0.min.js"></script>
+		<script src="/static/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/js/bootstrap.min.js"></script>
+		<script src="/static/js/testing.js"></script>
+	</body>
+</html>

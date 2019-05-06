@@ -4,7 +4,11 @@
 	<div class="row">
 		<div class="col-sm align-self-center text-center">
 			<p>You should press button below after checking that every test you want will be accessible for other people</p>	
-			<button type="button" class="btn btn-primary">Start testing</button>	
+			{{ if .isTestRunning }}	
+				<button type="button" class="btn btn-primary" onclick="stopTesting(this)">Stop Testing</button>	
+			{{ else }}	
+				<button type="button" class="btn btn-primary" onclick="startTesting(this)">Start testing</button>		
+			{{ end }}	
 		</div>
 	</div>
 	{{ range $test := .Tests }} 	

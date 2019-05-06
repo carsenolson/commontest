@@ -1,0 +1,13 @@
+{{ template "header" . }}
+<br>
+<br>
+<div class="container">
+	{{ range $file := .Files }}	
+		<div class="border-bottom rounded bg-light" style="margin: 15px auto;">
+			<a href="./{{$file.Name}}/"><h3>{{ $file.Name }}</h3></a>
+		</div>
+	{{ else }}
+		No results
+	{{ end }}
+<div>
+{{ template "footer" . }}

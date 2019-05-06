@@ -1,0 +1,24 @@
+{{ template "header" . }}
+
+<div class="container">
+	<h5>Name: {{ .Result.Full_name }}</h5>
+	<h5>Group/Grade: {{ .Result.Group }}</h5>
+	<h5>Test name: {{ .Result.File_name }}</h5>
+	<h5>Result: {{ .Result.Result }}</h5>
+	{{ $result := .Result }}
+	{{ range $index, $question := .Test.Questions }}  	
+		<div class="question bg-light mb-20 border-bottom">		
+			<h3 class="p-2" style="background-color: #e9e9e9;">{{ $question.Title }}</h3>	
+			<div class="imgbox">		
+				{{ range $image := $question.Image }}
+					<img src="{{ index $image 1 | safeUrl }}" alt="{{ index $image 0 }}" class="classic-image">
+				{{ end }}
+			</div>	
+			{{ range $num, $answer := $question.Answers }}
+			<div class="p-2 answer border-top" {{ index $result.Picked_answers $index | answerType $num $question.True_answers }}>{{$answer}}</div>
+			{{ end }}	
+		</div>	
+	{{ end }}	
+</div>
+
+{{ template "footer" . }}
