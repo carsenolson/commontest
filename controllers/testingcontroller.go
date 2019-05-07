@@ -91,17 +91,17 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 		right_answers += len(compare(e.Picked_answers[index], question.True_answers))
 		mistakes += len(compare(question.True_answers, e.Picked_answers[index]))
 	}
-	//if commonLength == 0  && mistakes+right_answers == 0{
-	//	e.Result = 100
-	//} else if commonLength == 0 && mistakes+right_answers != 0 {
-	//	e.Result = 0
-	//} else if commonLength != 0 && mistakes+right_answers == 0 {
-	//	e.Result = 100
-	//} else if commonLength !=0 && mistakes+right_answers >= true_answers {
-	//	e.Result = 0
-	//} else {
-	e.Result = int(float64(commonLength-(mistakes+right_answers))/float64(commonLength) * 100)
-	//}
+	if commonLength == 0  && mistakes+right_answers == 0{
+		e.Result = 100
+	} else if commonLength == 0 && mistakes+right_answers != 0 {
+		e.Result = 0
+	} else if commonLength != 0 && mistakes+right_answers == 0 {
+		e.Result = 100
+	} else if commonLength !=0 && mistakes+right_answers >= true_answers {
+		e.Result = 0
+	} else {
+		e.Result = int(float64(mistakes+rilht_answers)/float64(commonLength) * float64(100) - float646(100) * float64(-1))
+	}
 	err = e.Save(tc.conf.Result_path)
 	if err != nil {
 		fmt.Println(err)
