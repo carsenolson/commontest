@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"html/template"
 )
 
@@ -23,11 +22,8 @@ func init() {
 		},
 		// Don't mind lol
 		"answerType": func(index int, right, picked []int) template.HTMLAttr {
-			fmt.Println("index", index)
-			fmt.Println("right, picked:", right, picked)
 			required := compare(right, picked)
 			additional := compare(picked, right)
-			fmt.Println("required, additional:", required, additional)
 			//rgb(248, 249, 250) nothing
 			//rgb(141, 212, 157) possible right answer	
 			//rgb(40, 167, 69) picked answer
