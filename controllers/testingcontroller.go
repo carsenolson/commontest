@@ -100,7 +100,7 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 	//} else if commonLength !=0 && mistakes+right_answers >= true_answers {
 	//	e.Result = 0
 	//} else {
-	e.Result = int((float64(mistakes+right_answers)/float64(commonLength) * 100 - 100) * (-1))
+	e.Result = int(float64(commonLength-(mistakes+right_answers))/float64(commonLength) * 100)
 	//}
 	err = e.Save(tc.conf.Result_path)
 	if err != nil {
