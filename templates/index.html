@@ -12,13 +12,13 @@
 		</div>
 	</div>
 	{{ range $test := .Tests }} 	
-	<div class="border-bottom rounded bg-light" style="margin: 15px auto;">	
-		<div class="col-lg">
+	<div class="border-bottom d-flex justify-content-between align-items-center rounded bg-light" style="margin: 15px auto;">	
+		<div class="p-3">
 			<a href="/test/{{ .Name }}"><h5>{{ .Name }}</h5></a> 
 			<p>Size (bytes): {{ .Size }} Last Modified: {{ .ModTime }}<p>
 		</div>	
-		<div class="col-sm">	
-			<button type="button" class="btn btn-danger" onclick="deleteTest(this)">Delete</button>
+		<div>	
+			<button type="button" class="btn btn-danger mr-3" onclick="deleteTest(this)">Delete</button>
 		</div>	
 	</div>	
 	{{ else }}

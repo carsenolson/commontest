@@ -23,48 +23,29 @@ func init() {
 		},
 		// Don't mind lol
 		"answerType": func(index int, right, picked []int) template.HTMLAttr {
+			fmt.Println("index", index)
 			fmt.Println("right, picked:", right, picked)
 			required := compare(right, picked)
 			additional := compare(picked, right)
 			fmt.Println("required, additional:", required, additional)
-			if len(right) == 0 {
-				return template.HTMLAttr(`style="background-color: rgb(248, 249, 250);"`)
-			}
-			if len(picked) == 0 {
-				for _, rt := range right {
-					if index == rt {
-						return template.HTMLAttr(`style="background-color: rgb(40, 167, 69);"`)
-					}
+			//rgb(248, 249, 250) nothing
+			//rgb(141, 212, 157) possible right answer	
+			//rgb(40, 167, 69) picked answer
+			//rgb(220, 53, 69) mistake
+			for _, req := range required {
+				if index == req {
+					return template.HTMLAttr(`style="background-color: rgb(141, 212, 157);"`)
 				}
 			}
-			if len(required) != 0 {
-				for _, rt := range right {
-					if index == rt {
-						for pt := range picked {
-							if index == pt {
-								return template.HTMLAttr(`style="background-color: rgb(40, 167, 69);"`)
-							}
-						}
-                    }
-				}
-				for _, req := range required {
-					if index == req {
-						return template.HTMLAttr(`style="background-color: rgb(130, 234, 153);"`)
-					}
+			for _, add := range additional {
+				if index == add {
+					return template.HTMLAttr(`style="background-color: rgb(220, 53, 69);"`)
 				}
 			}
-			if len(additional) != 0 {
-					for _, add := range additional {
-						if index == add {
-							return template.HTMLAttr(`style="background-color: rgb(220, 53, 69);"`)
-						}
-					}
-			}
-			if len(required) == 0 && len(additional) == 0 {
-				for _, rt := range right {
-					if index == rt {
-						return template.HTMLAttr(`style="background-color: rgb(40, 167, 69);"`)
-					}
+			right_picked_answers := compare(right, required)
+			for _, rpa := range right_picked_answers {
+				if index == rpa {
+					return template.HTMLAttr(`style="background-color: rgb(40, 167, 69);"`)
 				}
 			}
 			return template.HTMLAttr(`style="background-color: rgb(248, 249, 250);"`)

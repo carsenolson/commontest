@@ -34,7 +34,9 @@ func main() {
 	r.HandleFunc("/newtest", test.SaveTest).Methods("POST")
 	r.HandleFunc("/test/{file_name}", test.ExistedTest).Methods("GET")
 	r.HandleFunc("/results/", result.Origin).Methods("GET")
+	r.HandleFunc("/results/", result.DeletePath).Methods("POST")
 	r.HandleFunc("/results/{path}/", result.Files).Methods("GET")
+	r.HandleFunc("/results/{path}/", result.DeleteRes).Methods("POST")
 	r.HandleFunc("/results/{path}/{file_name}/", result.Result).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8081", r))
 }

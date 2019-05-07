@@ -24,6 +24,19 @@ func ListResult(path string) (dirs []os.FileInfo, err error) {
 	return files, nil
 }
 
+func DeleteResultPath(path string) error {
+	if err := os.RemoveAll(path); err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteResult(path, file_name string) error {
+	if err := os.Remove(path+"/"+file_name); err != nil {
+		return err
+	}
+	return nil
+}
 
 func GetResultFromFile(path, filename string) (*Result, error) {
 	r := new(Result)

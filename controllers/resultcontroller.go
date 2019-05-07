@@ -3,6 +3,8 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"io/ioutil"
+	"encoding/json"
 	"commontest/Test"
 	"commontest/Config"
 	"commontest/Result"
@@ -54,6 +56,33 @@ func (rs *ResultContr) Result(rw http.ResponseWriter, req *http.Request) {
 	}
 	err = tpl.ExecuteTemplate(rw, "result.html", map[string]interface{}{"Test": test, "Result": res})
 	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (rs *ResultContr) DeletePath(rw http.ResponseWriter, req *http.Request) {
+	e := &struct {
+		File_name string
+	}{}
+	data, _ := ioutil.ReadAll(req.Body)
+    fmt.Println(string(data))
+	json.Unmarshal(data, &e)
+    fmt.Println(e)
+	if err := Result.DeleteResultPath(rs.conf.Result_path+"/"+e.File_name); err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (rs *ResultContr) DeleteRes(rw http.ResponseWriter, req *http.Request) {
+	e := &struct {
+		File_name string
+	}{}
+	path := mux.Vars(req)["path"]
+	data, _ := ioutil.ReadAll(req.Body)
+    fmt.Println(string(data))
+	json.Unmarshal(data, &e)
+    fmt.Println(e)
+	if err := Result.DeleteResult(rs.conf.Result_path+"/"+path, e.File_name); err != nil {
 		fmt.Println(err)
 	}
 }

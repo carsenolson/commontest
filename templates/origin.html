@@ -3,8 +3,9 @@
 <br>
 <div class="container">
 	{{ range $file := .Files }}	
-		<div class="border-bottom rounded bg-light" style="margin: 15px auto;">
+		<div class="row border-bottom rounded d-flex justify-content-between bg-light" style="margin: 15px auto;">
 			<a href="./{{$file.Name}}/"><h3>{{ $file.Name }}</h3></a>
+			<button type="button" class="btn btn-danger" onclick="deleteRes(this)">Delete</button>	
 		</div>
 	{{ else }}
 		No results
