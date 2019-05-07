@@ -97,7 +97,12 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println(float64(100) / float64(commonLength), " * ", float64(mistakes+right_answers))
 	fmt.Println("100 - ", int((float64(100) / float64(commonLength)) * float64(mistakes+right_answers)))
 	if picked_answers != 0 {
-		e.Result = 100 - int((float64(100) / float64(commonLength)) * float64(mistakes+right_answers))
+		res := 100 - int((float64(100) / float64(true_answers)) * float64(mistakes+right_answers))
+		if res < 0 {
+			e.Result = 0
+		} else {
+			e.Result = res
+		}
 	} else {
 		e.Result = 0
 	}
