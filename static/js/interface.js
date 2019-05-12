@@ -124,7 +124,7 @@ function addAnswer(elem) {
 														<div class="input-group-text">
 															<input type="checkbox" class="right-answer" onclick="rightAnswer(this)" aria-label="Checkbox for following text input">
 														</div> 
-														<input type="text" class="form-control" placeholder="Recipient's username" 
+														<input type="text" class="form-control" placeholder="Possible answer" 
 															aria-label="Possible answer" aria-describedby="button-addon2">
 														<div class="input-group-append">
 															<button class="btn btn-outline-danger delete-answer" type="button" 
