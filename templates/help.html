@@ -1,7 +1,34 @@
 {{ template "header" . }}
 
 <div class="container">
-	<p>Here must be some help instructions</p>
+	<br>
+	<h4>Introduction</h4>
+	<p>This program allows you to create unique tests with pictures and share them with your local network.</p>
+	</p>You could see the main interface, when you pass address http://localhost:8081.</p>
+	<img src="/static/media/main_interface.png" class="img-fluid" alt="main interface">
+	<p>The main interface has three main parts: navigation bar, button to start testing, part with tests.</p>
+	<p>The navigation bar allows you to go between three main pages: main page, results, this help.</p>
+	<p>The button to start testing on press shows you the address where your tests are hosted</p>
+	<p>The part with tests provides list with tests and button to create a new test.</p>
+	<p>Now let's create a new test, for that you have to press "create new test" button.</p>
+	<img src="/static/media/creating_test.png" class="img-fluid" alt="creating test">
+	<p>After you filled your test with questions, images and right answers, you should save test. For that you have to press "Save Test" button right below. After that you'll be at main page. Now you got one test, to start testing with that test you have to press "Start testing" button. After that you may see the address where the test is hosted.</p>
+	<img src="/static/media/hosting_test.png" class="img-fluid" alt="hosting test">
+	<p>If you go to this address, you could see what the student could see.</p>
+	<img src="/static/media/testing.png" class="img-fluid" alt="testing">
+	<p>After you entered full name and class grade and picked test (there is only one test), you can start test, for that you have to press "Start test" button.</p>
+	<p>Exactly testing looks like that.</p>
+	<img src="/static/media/exactly_testing.png" class="img-fluid" alt="testing">
+	<p>To pick up the answer you have to just click on him, after that the answers has green backgound color.</p>
+	<p>If you are sure that everything is okay, you may click "Finish" button</p>
+	<img src="/static/media/result.png" class="img-fluid" alt="result">
+	<p>There is the result<p>
+	<p>Now in localhost page you can go to result page to see the result. The results are storing in directories, the directory has a name of date (month, day, year).</p>
+	<img src="/static/media/dir.png" class="img-fluid" alt="result">
+	<img src="/static/media/test_result.png" class="img-fluid" alt="result">
+	<p>If you click on test result you can see the data about student, result and student's picked answers. (The history works if the test of that result is not deleted, overwise you would see the message that test is deleted and history doesn't work properly.</p>
+	<img src="/static/media/history.png" class="img-fluid" alt="result">
+	<p>There is the main functionality of commontest, enjoy.</p>
 </div>
 
 {{ template "footer" . }}
