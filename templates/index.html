@@ -18,12 +18,14 @@
 			<p>Size (bytes): {{ .Size }} Last Modified: {{ .ModTime }}<p>
 		</div>	
 		<div>	
-			<button type="button" class="btn btn-danger mr-3" onclick="deleteTest(this)">Delete</button> </div>	</div>	
+			<button type="button" class="btn btn-danger mr-3" onclick="deleteTest(this)">Delete</button> 
+		</div>	
+	</div>	
 	{{ else }}
-		<h4>There is no tests yet!</h4>
+		<p>There is no tests yet!</p>
 	{{ end }} 
 	<div class="row">
-		<a href="/newtest" class="btn btn-secondary btn active" role="button" aria-pressed="true">Create new test</a>	
+		<a href="/newtest" class="btn btn-sm btn-secondary btn-block active" role="button">Create new test</a>
 	</div>
 </div>
 

@@ -4,7 +4,10 @@
 <div class="container">
 	{{ range $file := .Files }}	
 		<div class="row border-bottom rounded d-flex justify-content-between bg-light" style="margin: 15px auto;">
-			<a href="./{{$file.Name}}/"><h3>{{ $file.Name }}</h3></a>
+			<a href="./{{$file.Name}}/" class="flex-grow-1"><h3>{{ $file.Name }}</h3></a>
+			{{ if $file.IsDir }}
+				<button type="button" class="btn btn-success" onclick="xlsxResult(this)">Xlsx dir</button>		
+			{{ end }}
 			<button type="button" class="btn btn-danger" onclick="deleteRes(this)">Delete</button>	
 		</div>
 	{{ else }}

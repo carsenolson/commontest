@@ -99,7 +99,6 @@ func (gen *General) ActionHandle(rw http.ResponseWriter, req *http.Request) {
 			io.WriteString(rw, "http://"+GetOutboundIP().String()+":8080/")
 			go gen.StartTesting()
 		case "stopTesting":
-			fmt.Println("got stop testing")
 			gen.isTestRunning = false
 			gen.StopTesting()
 		default:
