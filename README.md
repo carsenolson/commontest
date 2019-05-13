@@ -4,10 +4,10 @@ Complex program for creating tests and local testing...
 
 ##  Compiling
 
-To compile commontest you have to install `gorilla/mux`
+To compile commontest you have to install `gorilla/mux` and `tealeg/xlsx`
 
 ```
-go get github.com/gorilla/mux
+go get github.com/gorilla/mux && go get github.com/tealeg/xlsx
 ```
 
 Then just type
