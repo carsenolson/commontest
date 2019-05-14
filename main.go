@@ -38,6 +38,6 @@ func main() {
 	r.HandleFunc("/results/{path}/", result.Files).Methods("GET")
 	r.HandleFunc("/results/{path}/", result.DeleteRes).Methods("POST")
 	r.HandleFunc("/results/{path}/{file_name}/", result.Result).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8081", r))
 	fmt.Println("*** PLEASE OPEN YOUR FAVORITE BROWSER AND GO TO: http://localhost:8081/ ***")
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
