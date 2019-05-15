@@ -12,6 +12,7 @@ function deleteRes(elem) {
 
 function xlsxResult(elem) {
 	console.log($(elem))
+	alert("The file with name "+$(elem)[0].previousElementSibling.children[0].innerHTML + ".xlsx has been stored in your app directory")
 	console.log({file_name: $(elem)[0].previousElementSibling.children[0].innerHTML, option:"xlsx"})
     $.ajax({
         method: "POST",
