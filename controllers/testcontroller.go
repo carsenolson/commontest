@@ -22,8 +22,7 @@ func NewTestController(c *Config.Config) *TestController {
 }
 
 func (tc *TestController) NewTest(rw http.ResponseWriter, req *http.Request) {
-	pageData := map[string]interface{}{}
-	tpl.ExecuteTemplate(rw, "newtest.html", pageData)
+	tpl.ExecuteTemplate(rw, "newtest.html", nil)
 }
 
 func (tc *TestController) SaveTest(rw http.ResponseWriter, req *http.Request) {

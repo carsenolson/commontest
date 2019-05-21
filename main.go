@@ -1,16 +1,12 @@
 package main
 
 import (
-	//"os"
 	"fmt"
 	"log"
-	//"encoding/json"
 	"net/http"
 	"commontest/Config"
 	"commontest/controllers"
 	"github.com/gorilla/mux"
-	//"net/http"
-	//"hightest/controllers"
 )
 
 func main() {
