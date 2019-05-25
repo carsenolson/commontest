@@ -42,8 +42,8 @@ function walkThrough(elem) {
 		}
 		data["Picked_answers"].push(true_answers)
 	}
-	console.log(data)
-
+	console.log(JSON.stringify(data))
+	
 	$.ajax({
 		method:"POST",
 		url: "/result",

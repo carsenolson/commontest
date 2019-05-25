@@ -7,8 +7,12 @@
 			<a href="./{{$file.Name}}/" class="flex-grow-1"><h3>{{ $file.Name }}</h3></a>
 			{{ if $file.IsDir }}
 				<button type="button" class="btn btn-success" onclick="xlsxResult(this)" data-toggle="modal" data-target="#saveXlsx">Xlsx dir</button>		
+				<button type="button" class="btn btn-danger" onclick="deleteRes(this)">Delete</button>		
+			{{ else }}
+				<a></a>
+				<button type="button" class="btn btn-danger" onclick="deleteRes(this)">Delete</button>		
 			{{ end }}
-			<button type="button" class="btn btn-danger" onclick="deleteRes(this)">Delete</button>	
+			
 		</div>
 	{{ else }}
 		No results

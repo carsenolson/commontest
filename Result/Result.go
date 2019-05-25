@@ -57,7 +57,7 @@ func (r *Result) Save(path string) error {
 	if err != nil {
 		return err
 	}
-	filename := r.Full_name+"_"+r.Group+"_"+r.File_name+"_"+strconv.Itoa(r.Result)+"_"+strconv.Itoa(dt.Hour())+"_"+strconv.Itoa(dt.Minute())+"_"+strconv.Itoa(dt.Second())
+	filename := r.Full_name+"_"+r.Group+"_"+r.File_name+"_"+strconv.Itoa(r.Result)+"_"+strconv.Itoa(dt.Hour())+"_"+strconv.Itoa(dt.Minute())+"_"+strconv.Itoa(dt.Second())+"_"+strconv.Itoa(dt.Nanosecond())
 	file, err := os.Create(path+"/"+dirName+"/"+filename)
 	if err != nil {
 		return err

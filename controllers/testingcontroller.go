@@ -113,4 +113,3 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 	}
 	io.WriteString(rw, strconv.Itoa(e.Result))
 }
-
