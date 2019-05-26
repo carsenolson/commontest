@@ -80,22 +80,16 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	commonLength := 0
 	mistakes :=0
 	true_answers := 0
 	right_answers := 0
 	picked_answers := 0
-	fmt.Println(e.Picked_answers)
 	for index, question := range test.Questions {
-		commonLength += len(question.Answers)
 		true_answers += len(question.True_answers)
 		picked_answers += len(e.Picked_answers[index])
 		right_answers += len(compare(e.Picked_answers[index], question.True_answers))
 		mistakes += len(compare(question.True_answers, e.Picked_answers[index]))
 	}
-	fmt.Println("100 / questoinAmount: ", float64(100) / float64(commonLength))
-	fmt.Println(float64(100) / float64(commonLength), " * ", float64(mistakes+right_answers))
-	fmt.Println("100 - ", int((float64(100) / float64(commonLength)) * float64(mistakes+right_answers)))
 	if picked_answers != 0 {
 		res := 100 - int((float64(100) / float64(true_answers)) * float64(mistakes+right_answers))
 		if res < 0 {
@@ -106,7 +100,6 @@ func (tc *TestingController) Result(rw http.ResponseWriter, req *http.Request) {
 	} else {
 		e.Result = 0
 	}
-	//e.Result = int((float64(mistakes+right_answers)/float64(commonLength) * float64(100) - float64(100)) * float64(-1))
 	err = e.Save(tc.conf.Result_path)
 	if err != nil {
 		fmt.Println(err)
